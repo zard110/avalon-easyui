@@ -1,23 +1,16 @@
 define(function (require) {
-  // Load any app-specific modules
-  // with a relative require call,
-  // like:
+
+  // 主题
+  require('ui.theme');
+
+  // 依赖于 avalon 构建 MVVM 框架
+  require('avalon');
+
+  // 扩展 easyui 的 parser
+  require('core/parser');
 
 
-  // Load library/vendor modules using
-  // full IDs, like:
-  require('easyui/layout');
-  require('theme');
+  /** 组件 **/
+  require('components/layout');
 
-  var avalon = require('avalon'),
-    parser = require('easyui/parser');
-
-  parser.auto = false;
-  parser.onComplete = function() {
-    avalon.ready(function() {
-      avalon.scan(document.body);
-    });
-  };
-
-  return parser;
 });
