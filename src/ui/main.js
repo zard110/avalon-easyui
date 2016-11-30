@@ -9,7 +9,6 @@ define(function (require) {
   // 扩展 easyui 的 parser
   require('core/parser');
 
-
   /** 组件 **/
   require('components/layout');
 
