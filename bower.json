@@ -1,0 +1,21 @@
+{
+  "name": "requirejs-easyui",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "zard110 <zhangk1986@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-easyui": "jquery.easyui#*",
+    "require-css": "^0.1.8"
+  }
+}
