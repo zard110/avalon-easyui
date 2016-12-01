@@ -1,8 +1,13 @@
 define([
   'angular',
+  'components/layout/layout',
+  'components/datagrid/datagrid',
   'ui.theme'
-], function (ng) {
+], function (ng, layout, datagrid) {
   'use strict';
 
-  return ng.module('centit.ui', []);
+  return ng.module('centit.ui', [
+    layout.name,
+    datagrid.name
+  ]);
 });

@@ -9,16 +9,24 @@
 </head>
 <body class="centit-ui" ng-controller="IndexController as vm">
 
-<xt-layout>
+<div xt-layout>
   <div id="header" data-options="region:'north'">
-    <div id="title"></div>
+    <div class="title">{{vm.title}}</div>
   </div>
   <div id="side" data-options="region:'west'"></div>
   <div id="center" data-options="region:'center'">
-    hello, {{vm.name}}!
+    <table xt-datagrid items="vm.items">
+      <thead>
+        <tr>
+          <th width="100" field="id">编号</th>
+          <th width="100" field="name">姓名</th>
+          <th width="100" field="sex">性别</th>
+        </tr>
+      </thead>
+    </table>
   </div>
   <div id="footer" data-options="region:'south'"></div>
-</xt-layout>
+</div>
 
 <script data-main="app" src="lib/requirejs/require.js"></script>
 </body>

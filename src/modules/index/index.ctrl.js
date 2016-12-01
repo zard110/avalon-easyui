@@ -6,8 +6,17 @@ define([
 
   ////////////////////////////////
 
-  function IndexController() {
+  /* @ngInject */
+  function IndexController($timeout) {
     var vm = this;
-    vm.name = 'world';
+    vm.title = 'Centit UI';
+
+    $timeout(function() {
+      vm.items = [
+        {id: 1, name: 'zk', sex: 1},
+        {id: 2, name: 'pyq', sex: 0},
+        {id: 3, name: 'zpa', sex: 1}
+      ];
+    }, 1000);
   }
 });
