@@ -13,9 +13,24 @@
   <div id="header" data-options="region:'north'">
     <div class="title">{{vm.title}}</div>
   </div>
-  <div id="side" data-options="region:'west'"></div>
+  <div id="side" data-options="region:'west'">
+
+    <form name="UserInfo">
+      <input type="text" name="id" xt-textbox ng-model="vm.user.id">
+      <input type="text" name="name" xt-textbox ng-model="vm.user.name">
+      <input type="text" name="sex" xt-textbox ng-model="vm.user.sex">
+    </form>
+
+    Id: {{vm.user.id}} <br>
+    Name: {{vm.user.name }} <br>
+    Sex: {{vm.user.sex}} <br>
+
+  </div>
   <div id="center" data-options="region:'center'">
-    <table xt-datagrid items="vm.items">
+
+    @{{vm.items}}@
+
+    <table id="users" xt-datagrid items="vm.items">
       <thead>
         <tr>
           <th width="100" field="id">编号</th>

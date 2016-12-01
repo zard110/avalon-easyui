@@ -24,11 +24,8 @@ define([
       $scope.$watch('items', function(items) {
         if (!items) return;
 
-        if (!items.length) {
-
-        }
         $scope.$el.datagrid('loadData', items);
-      });
+      }, true);
     }
 
     function link(scope, element) {

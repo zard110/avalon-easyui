@@ -9,7 +9,7 @@ define([
   ////////////////////////////////
 
   /* @ngInject */
-  function LayoutDirective($timeout) {
+  function LayoutDirective() {
     return {
       restrict: 'EA',
       scope: true,
