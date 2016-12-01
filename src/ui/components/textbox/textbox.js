@@ -30,7 +30,8 @@ define([
           });
         });
 
-      ngModel.$render = function() {
+      ngModel.$render = function(value) {
+        console.log(ngModel.$viewValue, value)
         element.textbox('setValue', ngModel.$viewValue);
       }
     }

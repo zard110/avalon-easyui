@@ -16,9 +16,14 @@
   <div id="side" data-options="region:'west'">
 
     <form name="UserInfo">
-      <input type="text" name="id" xt-textbox ng-model="vm.user.id">
-      <input type="text" name="name" xt-textbox ng-model="vm.user.name">
-      <input type="text" name="sex" xt-textbox ng-model="vm.user.sex">
+      <input type="text" name="id" xt-textbox ng-model="vm.user.id" style="width: 90%"> <br>
+
+      <input type="text" name="name" xt-textbox ng-model="vm.user.name" style="width: 90%"> <br>
+
+      <select name="sex" xt-combobox ng-model="vm.user.sex" style="width: 90%">
+        <option value="0">女</option>
+        <option value="1">男</option>
+      </select>
     </form>
 
     Id: {{vm.user.id}} <br>
@@ -28,16 +33,27 @@
   </div>
   <div id="center" data-options="region:'center'">
 
-    @{{vm.items}}@
 
-    <table id="users" xt-datagrid items="vm.items">
+
+    <table id="users" xt-datagrid items="vm.items" border="false">
       <thead>
         <tr>
           <th width="100" field="id">编号</th>
           <th width="100" field="name">姓名</th>
           <th width="100" field="sex">性别</th>
+          <th field="operations">操作</th>
         </tr>
       </thead>
+      <tbody>
+        <tr>
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.sex}}</td>
+          <td>
+            <a xt-linkbutton @click="vm.remove(item)">删除</a>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
   <div id="footer" data-options="region:'south'"></div>
