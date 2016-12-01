@@ -1,15 +1,8 @@
-define(function (require) {
+define([
+  'angular',
+  'ui.theme'
+], function (ng) {
+  'use strict';
 
-  // 主题
-  require('ui.theme');
-
-  // 依赖于 angular 构建 MVVM 框架
-  require('angular');
-
-  // 扩展 easyui 的 parser
-  require('core/parser');
-
-  /** 组件 **/
-  require('components/layout');
-
+  return ng.module('centit.ui', []);
 });

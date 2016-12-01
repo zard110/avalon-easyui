@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh_CN" ng-app="centit">
+<html lang="zh_CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>EasyUI Plus</title>
 </head>
-<body class="centit-ui" ng-controller="IndexController">
+<body class="centit-ui" ng-controller="IndexController as vm">
 
 <xt-layout>
   <div id="header" data-options="region:'north'">
@@ -15,11 +15,11 @@
   </div>
   <div id="side" data-options="region:'west'"></div>
   <div id="center" data-options="region:'center'">
-    hello, {{name}}!
+    hello, {{vm.name}}!
   </div>
   <div id="footer" data-options="region:'south'"></div>
 </xt-layout>
 
-<script data-main="app" src="libs/requirejs/require.js"></script>
+<script data-main="app" src="lib/requirejs/require.js"></script>
 </body>
 </html>

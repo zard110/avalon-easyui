@@ -1,13 +1,9 @@
-define(['angular', 'config'], function(angular, config) {
+define([
+  'angular',
+  'config',
+  'ui/main',
 
-  angular.module(config.name)
-    .controller('IndexController', IndexController);
-
-  /* @ngInject */
-  function IndexController() {
-    var vm = this;
-
-    vm.name = 'world';
-  }
-
+  'modules/index/index.ctrl'
+], function(ng, config, ui, ctrl) {
+  ng.module(config.name, [ui.name, ctrl.name]);
 });
