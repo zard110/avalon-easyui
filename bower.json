@@ -17,6 +17,8 @@
   "dependencies": {
     "jquery-easyui": "jquery.easyui#*",
     "require-css": "^0.1.8",
-    "es6-promise": "^4.0.5"
+    "es6-promise": "^4.0.5",
+    "angular": "^1.5.9",
+    "oclazyload": "^1.0.9"
   }
 }

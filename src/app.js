@@ -8,7 +8,7 @@ requirejs.config({
     'themes': 'ui/themes',
 
     // 第三方插件配置
-    'avalon': 'libs/avalon/2.2.2/avalon',
+    'angular': 'libs/angular/1.5.9/angular',
     'jquery': 'libs/jquery/3.1.1/jquery',
     'es6-promise': 'libs/es6-promise/4.0.5/es6-promise',
 
@@ -20,6 +20,12 @@ requirejs.config({
     'ui.theme': 'ui/themes/qui/theme'
   },
 
+  shim: {
+    'angular': {
+      exports: 'angular'
+    }
+  },
+
   map: {
     '*': {
       'css': 'libs/requirejs/css'
@@ -27,7 +33,12 @@ requirejs.config({
   }
 });
 
-// 框架入口
-requirejs(['ui/main', 'index'], function() {
+define('config', {
+  name: 'centit'
+});
 
+// 框架入口
+requirejs(['angular', 'config'], function(angular, config) {
+  angular.module(config.name, []);
+  requirejs(['ui/main', 'index']);
 });

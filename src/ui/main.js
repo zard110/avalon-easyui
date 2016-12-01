@@ -3,8 +3,8 @@ define(function (require) {
   // 主题
   require('ui.theme');
 
-  // 依赖于 avalon 构建 MVVM 框架
-  require('avalon');
+  // 依赖于 angular 构建 MVVM 框架
+  require('angular');
 
   // 扩展 easyui 的 parser
   require('core/parser');
