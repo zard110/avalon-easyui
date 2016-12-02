@@ -16,11 +16,13 @@
   <div id="side" data-options="region:'west'">
 
     <form name="UserInfo">
-      <input type="text" name="id" xt-textbox ng-model="vm.user.id" style="width: 90%"> <br>
+      <input type="text" name="id" xt-textbox ng-model="vm.user.sex" style="width: 90%"> <br>
 
       <input type="text" name="name" xt-textbox ng-model="vm.user.name" style="width: 90%"> <br>
 
-      <select name="sex" xt-combobox ng-model="vm.user.sex" style="width: 90%" multiple="true">
+      <select xt-combobox
+        id="index_sex" name="sex" style="width: 90%"
+        ng-model="vm.user.sex" multiple="true">
         <option value="0">女人</option>
         <option value="1">男人</option>
       </select>

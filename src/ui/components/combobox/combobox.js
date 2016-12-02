@@ -12,7 +12,9 @@ define([
   function ComboboxDirective() {
     return {
       restrict: 'EA',
-      scope: true,
+      scope: {
+        value: '=ngModel'
+      },
       require: 'ngModel',
       link: link
     };
@@ -23,18 +25,26 @@ define([
       element = $(element[0]);
 
       element.combobox({
-        prompt: '123',
-        onChange: function(newValue, oldValue) {
+        prompt: '——请选择——',
+        onChange: function(newValue) {
+
+          // 忽略来自$watch的改变值
+          if (options.ignoreChange) {
+            options.ignoreChange = false;
+            return;
+          }
+
           scope.$apply(function() {
             ngModel.$setViewValue(newValue);
           });
         }
       });
 
-      ngModel.$render = function() {
-        console.log('combobox', ngModel.$viewValue)
+      var options = element.data('combobox').options;
+      scope.$watch('value', function() {
+        options.ignoreChange = true;
         element.combobox('setValue', ngModel.$viewValue);
-      };
+      });
     }
   }
 });
