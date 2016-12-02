@@ -7,12 +7,11 @@
  * To use it on other terms please contact us: info@jeasyui.com
  *
  */
-define(function(require) {
-  require('./parser');
-  require('css!easyui.theme/panel');
-
-  var jQuery = require('jquery');
-
+define([
+  'jquery',
+  './parser',
+  'css!easyui.theme/panel'
+], function(jQuery) {
   (function($){
     $.fn._remove=function(){
       return this.each(function(){
@@ -626,6 +625,7 @@ define(function(require) {
     },onExpand:function(){
     }};
   })(jQuery);
+  return jQuery.fn.panel.defaults;
 });
 
 
