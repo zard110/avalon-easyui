@@ -7,8 +7,10 @@
  * To use it on other terms please contact us: info@jeasyui.com
  *
  */
-define(function(require) {
-  var jQuery = require('jquery');
+define([
+  'jquery',
+  'css!easyui.style/icon'
+], function(jQuery) {
 
   (function($){
     $.easyui={indexOfArray:function(a,o,id){

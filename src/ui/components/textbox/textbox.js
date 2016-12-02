@@ -22,7 +22,9 @@ define([
     function link(scope, element, attrs, ngModel) {
       element = $(element[0]);
 
-      element.textbox()
+      element.textbox({
+        validateOnCreate: false
+      })
         .textbox('textbox')
         .bind('blur', function() {
           scope.$apply(function() {

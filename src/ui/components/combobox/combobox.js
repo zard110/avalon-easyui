@@ -25,6 +25,7 @@ define([
       element = $(element[0]);
 
       element.combobox({
+        validateOnCreate: false,
         prompt: '——请选择——',
         onChange: function(newValue) {
 

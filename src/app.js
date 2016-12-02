@@ -16,7 +16,9 @@ requirejs.config({
 
     // easyui 配置
     'easyui': 'lib/easyui/1.5.0/plugins',
+    'easyui.locale': 'lib/easyui/1.5.0/locale/easyui-lang-zh_CN',
     'easyui.theme': 'lib/easyui/1.5.0/themes/default',
+    'easyui.style': 'lib/easyui/1.5.0/themes',
 
     // 主题配置
     'ui.theme': 'ui/themes/qui/theme'

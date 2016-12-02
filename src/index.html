@@ -16,21 +16,27 @@
   <div id="side" data-options="region:'west'">
 
     <form name="UserInfo">
-      <input type="text" name="id" xt-textbox ng-model="vm.user.sex" style="width: 90%"> <br>
 
-      <input type="text" name="name" xt-textbox ng-model="vm.user.name" style="width: 90%"> <br>
+      <input xt-textbox required
+             type="text" name="id" style="width: 90%"
+             ng-model="vm.user.id" > <br>
 
-      <select xt-combobox
+      <input xt-textbox required
+             type="text" name="name" style="width: 90%"
+             ng-model="vm.user.name"> <br>
+
+      <select xt-combobox required
         id="index_sex" name="sex" style="width: 90%"
         ng-model="vm.user.sex" multiple="true">
         <option value="0">女人</option>
         <option value="1">男人</option>
       </select>
+
+
+      <a xt-linkbutton iconCls="icon-save">提交</a>
     </form>
 
-    Id: {{vm.user.id}} <br>
-    Name: {{vm.user.name }} <br>
-    Sex: {{vm.user.sex}} <br>
+    {{vm.user | json}}
 
   </div>
   <div id="center" data-options="region:'center'">
