@@ -6,6 +6,7 @@ define([
   'components/textbox/textbox',
   'components/combobox/combobox',
   'components/linkbutton/linkbutton',
+  'components/panel/panel',
   'ui.theme'
 ], function (ng,
              translate,
@@ -13,7 +14,8 @@ define([
              datagrid,
              textbox,
              combobox,
-             linkbutton
+             linkbutton,
+             panel
 ) {
   'use strict';
 
@@ -24,6 +26,7 @@ define([
     datagrid.name,
     textbox.name,
     combobox.name,
-    linkbutton.name
+    linkbutton.name,
+    panel.name
   ]);
 });

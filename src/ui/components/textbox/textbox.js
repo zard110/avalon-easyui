@@ -27,6 +27,8 @@ define([
       })
         .textbox('textbox')
         .bind('blur', function() {
+          if (!$(this).validatebox('isValid')) return;
+
           scope.$apply(function() {
             ngModel.$setViewValue(element.textbox('getValue'));
           });

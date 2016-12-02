@@ -12,7 +12,8 @@ define([
     return {
       restrict: 'EA',
       scope: {
-        items: '='
+        items: '=',
+        selected: '='
       },
       link: link,
       controller: controller
@@ -30,7 +31,16 @@ define([
 
     function link(scope, element) {
       scope.$el = $(element[0]).datagrid({
-        fit: true
+        autoRowHeight: false,
+        fitColumns: true,
+        striped: true,
+        rownumbers: true,
+        singleSelect: true,
+        onSelect: function(index, row) {
+          scope.$apply(function() {
+            scope.selected = row
+          });
+        }
       });
     }
   }

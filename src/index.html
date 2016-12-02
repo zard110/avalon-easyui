@@ -14,42 +14,45 @@
     <div class="title">{{vm.title}}</div>
   </div>
   <div id="side" data-options="region:'west'">
-
     <form name="UserInfo">
-
       <input xt-textbox required
-             type="text" name="id" style="width: 90%"
+             type="text" name="id" style="width: 100%"
              ng-model="vm.user.id" > <br>
-
       <input xt-textbox required
-             type="text" name="name" style="width: 90%"
+             type="text" name="name" style="width: 100%"
              ng-model="vm.user.name"> <br>
-
       <select xt-combobox required
-        id="index_sex" name="sex" style="width: 90%"
-        ng-model="vm.user.sex" multiple="true">
+              id="index_sex" name="sex" style="width: 100%"
+              ng-model="vm.user.sex">
         <option value="0">女人</option>
         <option value="1">男人</option>
       </select>
-
-
       <a xt-linkbutton iconCls="icon-save">提交</a>
     </form>
-
-    {{vm.user | json}}
-
   </div>
   <div id="center" data-options="region:'center'">
 
+    <style>
+      .main {
+        margin-bottom: 10px;
+      }
 
-
-    <table id="users" xt-datagrid items="vm.items" border="false">
+      .main > .panel-body {
+        border-width: 0 0 1px 0;
+      }
+    </style>
+    <table xt-datagrid id="users" style="width: 100%"
+           title="用户列表"
+           items="vm.items"
+           selected="vm.user"
+           idField="id"
+           cls="main">
       <thead>
         <tr>
           <th width="100" field="id">编号</th>
-          <th width="100" field="name">姓名</th>
+          <th width="200" field="name">姓名</th>
           <th width="100" field="sex">性别</th>
-          <th field="operations">操作</th>
+          <th width="100" field="operations">操作</th>
         </tr>
       </thead>
       <tbody>
@@ -63,6 +66,14 @@
         </tr>
       </tbody>
     </table>
+
+    <div xt-panel style="padding: 10px;"
+         title="用户信息"
+         item="vm.user"
+         cls="main"
+         href="modules/user/user.html">
+    </div>
+
   </div>
   <div id="footer" data-options="region:'south'"></div>
 </div>

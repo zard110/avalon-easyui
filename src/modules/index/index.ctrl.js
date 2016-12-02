@@ -12,7 +12,7 @@ define([
 
     vm.title = 'Centit UI';
     vm.index = 4;
-
+    vm.user = {};
 
     $timeout(function() {
       vm.items = [
@@ -20,7 +20,6 @@ define([
         {id: 2, name: 'pyq', sex: "0"},
         {id: 3, name: 'zpa', sex: "1"}
       ];
-      vm.user = vm.items[2];
     }, 1000);
   }
 });
