@@ -22,10 +22,12 @@ define([
     function link(scope, element, attrs, ngModel) {
       element = $(element[0]);
 
+
+      console.log('text: '+ element.attr('name') + ' is init');
+
       element.textbox({
         validateOnCreate: false
-      })
-        .textbox('textbox')
+      }).textbox('textbox')
         .bind('blur', function() {
           if (!$(this).validatebox('isValid')) return;
 
@@ -33,6 +35,8 @@ define([
             ngModel.$setViewValue(element.textbox('getValue'));
           });
         });
+
+
 
       ngModel.$render = function() {
         element.textbox('setValue', ngModel.$viewValue);

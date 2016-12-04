@@ -24,26 +24,37 @@ define([
     function link(scope, element, attrs, ngModel) {
       element = $(element[0]);
 
+      var ignoreChange = false,
+        ignoreModelChange = false;
+
       element.combobox({
         validateOnCreate: false,
         prompt: '——请选择——',
-        onChange: function(newValue) {
+        value: '',
+
+        onSelect: function(item) {
 
           // 忽略来自$watch的改变值
-          if (options.ignoreChange) {
-            options.ignoreChange = false;
+          if (ignoreChange) {
+            ignoreChange = false;
             return;
           }
 
           scope.$apply(function() {
-            ngModel.$setViewValue(newValue);
+            ignoreModelChange = true;
+            ngModel.$setViewValue(item.value);
           });
         }
       });
 
-      var options = element.data('combobox').options;
       scope.$watch('value', function() {
-        options.ignoreChange = true;
+        // 防止循环依赖改变
+        if (ignoreModelChange) {
+          ignoreModelChange = false;
+          return;
+        }
+
+        ignoreChange = true;
         element.combobox('setValue', ngModel.$viewValue);
       });
     }

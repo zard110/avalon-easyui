@@ -19,9 +19,13 @@ define([
     ////////////////////////////////
 
     function link(scope, element) {
-      $(element[0]).layout({
+      element = $(element[0]);
+
+      element.layout({
         fit: true
       });
+
+      console.log('layout: ' + element.attr('id') + ' is init');
     }
   }
 });

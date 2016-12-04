@@ -9,26 +9,12 @@
 </head>
 <body class="centit-ui" ng-controller="IndexController as vm">
 
-<div xt-layout>
+<div xt-layout id="parent">
   <div id="header" data-options="region:'north'">
     <div class="title">{{vm.title}}</div>
   </div>
   <div id="side" data-options="region:'west'">
-    <form name="UserInfo">
-      <input xt-textbox required
-             type="text" name="id" style="width: 100%"
-             ng-model="vm.user.id" > <br>
-      <input xt-textbox required
-             type="text" name="name" style="width: 100%"
-             ng-model="vm.user.name"> <br>
-      <select xt-combobox required
-              id="index_sex" name="sex" style="width: 100%"
-              ng-model="vm.user.sex">
-        <option value="0">女人</option>
-        <option value="1">男人</option>
-      </select>
-      <a xt-linkbutton iconCls="icon-save">提交</a>
-    </form>
+
   </div>
   <div id="center" data-options="region:'center'">
 
@@ -36,6 +22,7 @@
       .main {
         margin-bottom: 10px;
       }
+
 
       .main > .panel-body {
         border-width: 0 0 1px 0;
