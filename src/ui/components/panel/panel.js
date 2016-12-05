@@ -10,7 +10,10 @@ define([
   ////////////////////////////////
 
   /* @ngInject */
-  function PanelDirective($timeout, $compile) {
+  function PanelDirective($timeout, $compile, $controller) {
+
+    console.log($controller);
+
 
     // 替换panel默认loader，使angular可以$compile
     $panel.loader = loader;
@@ -18,7 +21,8 @@ define([
     return {
       restrict: 'EA',
       scope: {
-        item: '='
+        item: '=',
+        controller: '@'
       },
       link: link
     };
@@ -32,6 +36,20 @@ define([
       $timeout(function() {
         element.data('$scope', scope);
         element.panel();
+
+        if (scope.controller) {
+          var controllerInstance = $controller(scope.controller, ng.extend({
+              $scope: scope
+            }),
+            true
+          );
+
+          ng.extend(controllerInstance.instance, {
+            $panel: element
+          });
+
+          controllerInstance();
+        }
       });
     }
 
@@ -60,7 +78,9 @@ define([
       panel.append($child);
       options.onLoad.apply(this, arguments);
       $.data(this, "panel").isLoaded = true;
+
       $compile(panel.children())($scope);
+      console.log($scope);
       console.log('panel loaded');
     }
   }

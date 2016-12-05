@@ -1,24 +1,38 @@
-<form name="UserInfo">
+<form name="UserInfo" style="width: 50%">
   <h1 ng-if="!item.id">
     请选择用户
   </h1>
-  <span ng-if="item.id">
-    {{item.id}} <br>
+  <span ng-if="vm.user.id">
+    <p>{{vm.user.id}}</p>
     <input xt-textbox required
-           type="text" name="name" style="width: 150px"
-           ng-model="item.name"> <br>
+           type="text" name="name" style="width: 50%"
+           ng-model="vm.user.id"> <br>
     <select xt-combobox required
-          id="index_sex" name="sex" style="width: 150px"
-          ng-model="item.sex">
+          id="index_sex" name="sex" style="width: 50%"
+          ng-model="vm.user.sex">
       <option value="0">女人</option>
       <option value="1">男人</option>
     </select> <br>
-    <a xt-linkbutton iconCls="icon-save">提交</a>
-    <p>
-      #{{item | json}}#
-    </p>
+
+    <a xt-linkbutton validation-submit="UserInfo"
+       ng-click="vm.submit()"
+       iconCls="icon-save">提交</a>
+
+    <p>$dirty: {{UserInfo.$dirty}}</p>
+    <p>$invalid: {{UserInfo.$invalid}}</p>
+
+    <div xt-panel
+         title="用户信息2"
+         item="vm.user"
+         href="modules/user/user2.html">
+    </div>
   </span>
+  <p>
+    #{{item | json}}#
+  </p>
 </form>
+
+
 
 
 

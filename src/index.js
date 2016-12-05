@@ -3,7 +3,8 @@ define([
   'config',
   'ui/main',
 
-  'modules/index/index.ctrl'
-], function(ng, config, ui, ctrl) {
-  ng.module(config.name, [ui.name, ctrl.name]);
+  'modules/index/index.ctrl',
+  'modules/user/user.ctrl'
+], function(ng, config, ui, index, user) {
+  ng.module(config.name, [ui.name, index.name, user.name]);
 });
