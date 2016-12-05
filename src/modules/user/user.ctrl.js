@@ -14,7 +14,7 @@ define([
       vm.user = ng.extend({}, user);
     });
 
-    vm.submit = function() {
+    $scope.submit = function() {
       // if ($scope.UserInfo.$valid) {
       //   ng.extend($scope.item, vm.user);
       // }

@@ -7,6 +7,7 @@ define([
   'components/combobox/combobox',
   'components/linkbutton/linkbutton',
   'components/panel/panel',
+  'components/validatebox/validatebox',
   'ui.theme'
 ], function (ng,
              translate,
@@ -15,7 +16,8 @@ define([
              textbox,
              combobox,
              linkbutton,
-             panel
+             panel,
+             validatebox
 ) {
   'use strict';
 
@@ -27,6 +29,7 @@ define([
     textbox.name,
     combobox.name,
     linkbutton.name,
-    panel.name
+    panel.name,
+    validatebox.name
   ]);
 });

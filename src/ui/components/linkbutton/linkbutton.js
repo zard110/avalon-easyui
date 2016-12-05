@@ -13,7 +13,6 @@ define([
   function LinkbuttonDirective() {
     return {
       restrict: 'EA',
-      scope: true,
       link: link
     };
 

@@ -14,9 +14,10 @@
       <option value="1">男人</option>
     </select> <br>
 
-    <a xt-linkbutton validation-submit="UserInfo"
-       ng-click="vm.submit()"
-       iconCls="icon-save">提交</a>
+    <button xt-linkbutton
+       xt-validation-submit="UserInfo"
+       ng-click="submit()"
+       iconCls="icon-save">提交</button>
 
     <p>$dirty: {{UserInfo.$dirty}}</p>
     <p>$invalid: {{UserInfo.$invalid}}</p>
@@ -29,7 +30,7 @@
     </div>
   </span>
   <p>
-    #{{item | json}}#
+    #{{vm.user | json}}#
   </p>
 </form>
 
