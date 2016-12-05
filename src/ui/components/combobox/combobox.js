@@ -15,13 +15,16 @@ define([
       scope: {
         value: '=ngModel'
       },
-      require: 'ngModel',
+      require: ['ngModel', '^form'],
       link: link
     };
 
     ////////////////////////////////
 
-    function link(scope, element, attrs, ngModel) {
+    function link(scope, element, attrs, ctrls) {
+      var ngModel = ctrls[0],
+        Form = ctrls[1];
+
       element = $(element[0]);
 
       var ignoreChange = false,
@@ -46,6 +49,13 @@ define([
           });
         }
       });
+
+      if (!Form['$validateboxes']) {
+        Form['$validateboxes'] = [element.textbox('textbox')];
+      }
+      else {
+        Form['$validateboxes'].push(element.textbox('textbox'));
+      }
 
       scope.$watch('value', function() {
         // 防止循环依赖改变

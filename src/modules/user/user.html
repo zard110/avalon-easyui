@@ -6,7 +6,7 @@
     <p>{{vm.user.id}}</p>
     <input xt-textbox required
            type="text" name="name" style="width: 50%"
-           ng-model="vm.user.id"> <br>
+           ng-model="vm.user.name"> <br>
     <select xt-combobox required
           id="index_sex" name="sex" style="width: 50%"
           ng-model="vm.user.sex">
@@ -20,6 +20,7 @@
 
     <p>$dirty: {{UserInfo.$dirty}}</p>
     <p>$invalid: {{UserInfo.$invalid}}</p>
+    <p>$valid: {{UserInfo.$valid}}</p>
 
     <div xt-panel
          title="用户信息2"

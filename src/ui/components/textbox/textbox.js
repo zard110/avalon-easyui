@@ -13,16 +13,17 @@ define([
     return {
       restrict: 'EA',
       scope: true,
-      require: 'ngModel',
+      require: ['ngModel', '^form'],
       link: link
     };
 
     ////////////////////////////////
 
-    function link(scope, element, attrs, ngModel) {
+    function link(scope, element, attrs, ctrls) {
+      var ngModel = ctrls[0],
+        Form = ctrls[1];
+
       element = $(element[0]);
-
-
       console.log('text: '+ element.attr('name') + ' is init');
 
       element.textbox({
@@ -36,7 +37,14 @@ define([
           });
         });
 
+      if (!Form['$validateboxes']) {
+        Form['$validateboxes'] = [element.textbox('textbox')];
+      }
+      else {
+        Form['$validateboxes'].push(element.textbox('textbox'));
+      }
 
+      console.log('isValid', element.textbox('textbox').validatebox('isValid'));
 
       ngModel.$render = function() {
         element.textbox('setValue', ngModel.$viewValue);
