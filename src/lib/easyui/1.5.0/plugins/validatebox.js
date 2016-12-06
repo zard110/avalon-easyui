@@ -184,6 +184,7 @@ define([
               }
               return doValidate(type.name, type.params);
             });
+
             Promise.all(allPromise)
               .then(function(msg) {
                 resolve(msg);
@@ -217,7 +218,6 @@ define([
             var result = rule["validator"].call(el,value,params);
             var message=rule["message"];
 
-
             // 保留对原有返回true或者false方法的支持
             if(result === false){
               reject( errorMessage(options.invalidMessage||message, params) );
@@ -239,7 +239,9 @@ define([
               reject(result);
             }
           }
-          resolve();
+          else {
+            resolve();
+          }
         });
 
         function errorMessage(message, params) {
