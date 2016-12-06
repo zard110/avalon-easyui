@@ -27,7 +27,10 @@ define([
       console.log('text: '+ element.attr('name') + ' is init');
 
       element.textbox({
-        validateOnCreate: false
+        validateOnCreate: false,
+        validType: {
+          equals: '110011'
+        }
       }).textbox('textbox')
         .bind('blur', function() {
           // if (!$(this).validatebox('isValid')) return;
@@ -44,7 +47,7 @@ define([
         Form['$validateboxes'].push(element.textbox('textbox'));
       }
 
-      console.log('isValid', element.textbox('textbox').validatebox('isValid'));
+      // console.log('isValid', element.textbox('textbox').validatebox('isValid'));
 
       ngModel.$render = function() {
         element.textbox('setValue', ngModel.$viewValue);

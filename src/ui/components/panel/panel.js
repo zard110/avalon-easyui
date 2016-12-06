@@ -80,7 +80,6 @@ define([
       $.data(this, "panel").isLoaded = true;
 
       $compile(panel.children())($scope);
-      console.log($scope);
       console.log('panel loaded');
     }
   }

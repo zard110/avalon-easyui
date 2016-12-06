@@ -107,78 +107,121 @@ define([
         }
       }
     };
-    function _1f(_20){
-      var _21=$.data(_20,"validatebox");
-      var _22=_21.options;
-      var box=$(_20);
-      _22.onBeforeValidate.call(_20);
-      var _23=_24();
-      _23?box.removeClass("validatebox-invalid"):box.addClass("validatebox-invalid");
-      _22.err(_20,_21.message);
-      _22.onValidate.call(_20,_23);
-      return _23;
-      function _25(msg){
-        _21.message=msg;
+    function validate(el){
+      var validatebox=$.data(el,"validatebox");
+      var options=validatebox.options;
+      var box=$(el);
+      options.onBeforeValidate.call(el);
+      return checkValid()
+        .then(function(result, msg) {
+          result?box.removeClass("validatebox-invalid"):box.addClass("validatebox-invalid");
+          options.err(el,validatebox.message);
+          options.onValidate.call(el,result);
+
+          return result;
+        });
+
+      function setMessage(msg){
+        validatebox.message=msg;
       };
-      function _26(_27,_28){
-        var _29=_22.val(_20);
-        var _2a=/([a-zA-Z_]+)(.*)/.exec(_27);
-        var _2b=_22.rules[_2a[1]];
-        if(_2b&&_29){
-          var _2c=_28||_22.validParams||eval(_2a[2]);
-          if(!_2b["validator"].call(_20,_29,_2c)){
-            var _2d=_2b["message"];
-            if(_2c){
-              for(var i=0;i<_2c.length;i++){
-                _2d=_2d.replace(new RegExp("\\{"+i+"\\}","g"),_2c[i]);
+      function doValidate(validType,validParams){
+
+        var value=options.val(el);
+        var validInfo=/([a-zA-Z_]+)(.*)/.exec(validType);
+        var rule=options.rules[validInfo[1]];
+
+        return new Promise(function(resolve, reject) {
+          if(rule&&value){
+            var params=validParams||options.validParams||eval(validInfo[2]);
+            var result = rule["validator"].call(el,value,params);
+            var message=rule["message"];
+            if(params){
+              for(var i=0;i<params.length;i++){
+                message=message.replace(new RegExp("\\{"+i+"\\}","g"),params[i]);
               }
             }
-            _25(_22.invalidMessage||_2d);
-            return false;
+            message = options.invalidMessage||message;
+
+            // 保留对原有返回true或者false方法的支持
+            if(result === false){
+              setMessage(message);
+              reject(options.invalidMessage||message)
+            }
+            else if (result === true) {
+              resolve();
+            }
+            else {
+              result
+                .then(function() {
+                  resolve();
+                })
+                .catch(function(msg) {
+                  setMessage(msg || message);
+                  throw Error(msg || message);
+                });
+            }
           }
-        }
-        return true;
+          resolve();
+        });
       };
-      function _24(){
-        _25("");
-        if(!_22._validateOnCreate){
-          setTimeout(function(){
-            _22._validateOnCreate=true;
-          },0);
-          return true;
-        }
-        if(_22.novalidate||_22.disabled){
-          return true;
-        }
-        if(_22.required){
-          if(_22.val(_20)==""){
-            _25(_22.missingMessage);
-            return false;
+      function checkValid(){
+        setMessage("");
+
+        return new Promise(function(resolve) {
+          if(!options._validateOnCreate){
+            setTimeout(function(){
+              options._validateOnCreate=true;
+            },0);
+            resolve(true);
           }
-        }
-        if(_22.validType){
-          if($.isArray(_22.validType)){
-            for(var i=0;i<_22.validType.length;i++){
-              if(!_26(_22.validType[i])){
-                return false;
-              }
-            }
-          }else{
-            if(typeof _22.validType=="string"){
-              if(!_26(_22.validType)){
-                return false;
-              }
-            }else{
-              for(var _2e in _22.validType){
-                var _2f=_22.validType[_2e];
-                if(!_26(_2e,_2f)){
-                  return false;
-                }
-              }
+
+          if(options.novalidate||options.disabled){
+            resolve(true);
+          }
+
+          if(options.required){
+            if(options.val(el)==""){
+              setMessage(options.missingMessage);
+              resolve(false, options.missingMessage);
             }
           }
-        }
-        return true;
+
+          if(options.validType){
+
+            if (typeof options.validType=="string") {
+              options.validType = [options.validType];
+            }
+
+            if (!$.isArray(options.validType)) {
+              var temp = [];
+              for(var name in options.validType){
+                if (!options.validType.hasOwnProperty(name)) continue;
+                temp.push({
+                  name: name,
+                  params: options.validType[name]
+                });
+              }
+              options.validType = temp;
+            }
+
+            Promise.all(options.validType.map(function(type) {
+              if (typeof type == 'string') {
+                return doValidate(type);
+              }
+              return doValidate(type.name, type.params);
+            }))
+              .then(function() {
+                resolve(true);
+              })
+              .catch(function(msg) {
+                resolve(false, msg);
+              });
+
+          }
+          else {
+            resolve(true);
+          }
+        });
       };
     };
     function _30(_31,_32){
@@ -219,7 +262,7 @@ define([
         _30(this,_3a.options.disabled);
         _34(this,_3a.options.readonly);
         _6(this);
-        _1f(this);
+        validate(this);
       });
     };
     $.fn.validatebox.methods={options:function(jq){
@@ -230,45 +273,45 @@ define([
       });
     },validate:function(jq){
       return jq.each(function(){
-        _1f(this);
+        validate(this);
       });
     },isValid:function(jq){
-      return _1f(jq[0]);
+      return validate(jq[0]);
     },enableValidation:function(jq){
       return jq.each(function(){
         $(this).validatebox("options").novalidate=false;
         _6(this);
-        _1f(this);
+        validate(this);
       });
     },disableValidation:function(jq){
       return jq.each(function(){
         $(this).validatebox("options").novalidate=true;
         _6(this);
-        _1f(this);
+        validate(this);
       });
     },resetValidation:function(jq){
       return jq.each(function(){
         var _3b=$(this).validatebox("options");
         _3b._validateOnCreate=_3b.validateOnCreate;
-        _1f(this);
+        validate(this);
       });
     },enable:function(jq){
       return jq.each(function(){
         _30(this,false);
         _6(this);
-        _1f(this);
+        validate(this);
       });
     },disable:function(jq){
       return jq.each(function(){
         _30(this,true);
         _6(this);
-        _1f(this);
+        validate(this);
       });
     },readonly:function(jq,_3c){
       return jq.each(function(){
         _34(this,_3c);
         _6(this);
-        _1f(this);
+        validate(this);
       });
     }};
     $.fn.validatebox.parseOptions=function(_3d){
@@ -304,6 +347,27 @@ define([
     },onValidate:function(_4a){
     }};
   })(jQuery);
+
+
+  jQuery.extend(jQuery.fn.validatebox.defaults.rules, {
+    equals: {
+      validator: function(value,param){
+        return new Promise(function(resolve, reject) {
+          setTimeout(function() {
+            if (value == 'zk') {
+              resolve();
+            }
+            else {
+              reject();
+            }
+
+          }, 2000);
+        });
+      },
+      message: 'Field do not match.'
+    }
+  });
+
   return jQuery.fn.validatebox;
 });
 
