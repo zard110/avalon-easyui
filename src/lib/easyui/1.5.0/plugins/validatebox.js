@@ -112,86 +112,60 @@ define([
       var options=validatebox.options;
       var box=$(el);
       options.onBeforeValidate.call(el);
-      return checkValid()
-        .then(function(result, msg) {
-          result?box.removeClass("validatebox-invalid"):box.addClass("validatebox-invalid");
-          options.err(el,validatebox.message);
-          options.onValidate.call(el,result);
 
-          return result;
+      return checkValid()
+        .then(function() {
+          box.removeClass("validatebox-invalid");
+          options.onValidate.call(el, true);
+        })
+        .catch(function() {
+          box.addClass("validatebox-invalid");
+          options.err(el,validatebox.message);
+          options.onValidate.call(el, false);
         });
 
       function setMessage(msg){
         validatebox.message=msg;
       };
-      function doValidate(validType,validParams){
 
-        var value=options.val(el);
-        var validInfo=/([a-zA-Z_]+)(.*)/.exec(validType);
-        var rule=options.rules[validInfo[1]];
-
-        return new Promise(function(resolve, reject) {
-          if(rule&&value){
-            var params=validParams||options.validParams||eval(validInfo[2]);
-            var result = rule["validator"].call(el,value,params);
-            var message=rule["message"];
-            if(params){
-              for(var i=0;i<params.length;i++){
-                message=message.replace(new RegExp("\\{"+i+"\\}","g"),params[i]);
-              }
-            }
-            message = options.invalidMessage||message;
-
-            // 保留对原有返回true或者false方法的支持
-            if(result === false){
-              setMessage(message);
-              reject(options.invalidMessage||message)
-            }
-            else if (result === true) {
-              resolve();
-            }
-            else {
-              result
-                .then(function() {
-                  resolve();
-                })
-                .catch(function(msg) {
-                  setMessage(msg || message);
-                  throw Error(msg || message);
-                });
-            }
-          }
-          resolve();
-        });
-      };
+      /**
+       * 检查元素是否合法
+       * @returns {Promise}
+       */
       function checkValid(){
         setMessage("");
 
-        return new Promise(function(resolve) {
+        return new Promise(function(resolve, reject) {
           if(!options._validateOnCreate){
             setTimeout(function(){
               options._validateOnCreate=true;
             },0);
-            resolve(true);
+            resolve();
           }
 
           if(options.novalidate||options.disabled){
-            resolve(true);
+            resolve();
           }
 
           if(options.required){
             if(options.val(el)==""){
               setMessage(options.missingMessage);
-              resolve(false, options.missingMessage);
+              reject(options.missingMessage);
             }
           }
 
+          // validType 支持3种格式
+          // 1. validType="min.10" 或者 validType="range.[5, 10]" .后面的是参数，通过eval转换
+          // 2. validType="['min.10', 'max.20']" 穿入多个校验类型
+          // 3. validType="{min: 10}"
           if(options.validType){
 
+            // 第一种字符串类型转换成数组类型
             if (typeof options.validType=="string") {
               options.validType = [options.validType];
             }
 
+            // 第三种对象类型转换成数组类型
             if (!$.isArray(options.validType)) {
               var temp = [];
               for(var name in options.validType){
@@ -204,24 +178,80 @@ define([
               options.validType = temp;
             }
 
-            Promise.all(options.validType.map(function(type) {
+            var allPromise = options.validType.map(function(type) {
               if (typeof type == 'string') {
                 return doValidate(type);
               }
               return doValidate(type.name, type.params);
-            }))
-              .then(function() {
-                resolve(true);
+            });
+            Promise.all(allPromise)
+              .then(function(msg) {
+                resolve(msg);
               })
               .catch(function(msg) {
-                resolve(false, msg);
+                reject(msg);
               });
 
           }
           else {
-            resolve(true);
+            resolve();
           }
         });
+      };
+
+      /**
+       * 具体校验
+       * @param validType
+       * @param validParams
+       * @returns {Promise}
+       */
+      function doValidate(validType,validParams){
+
+        var value=options.val(el);
+        var validInfo=/([a-zA-Z_]+)(.*)/.exec(validType);
+        var rule=options.rules[validInfo[1]];
+
+        return new Promise(function(resolve, reject) {
+          if(rule&&value){
+            var params=validParams||options.validParams||eval(validInfo[2]);
+            var result = rule["validator"].call(el,value,params);
+            var message=rule["message"];
+
+
+            // 保留对原有返回true或者false方法的支持
+            if(result === false){
+              reject( errorMessage(options.invalidMessage||message, params) );
+            }
+            else if (result === true) {
+              resolve();
+            }
+            else if (result.then) {
+              result
+                .then(function() {
+                  resolve();
+                })
+                .catch(function(msg) {
+                  reject( errorMessage(msg||options.invalidMessage||message, params) );
+                });
+            }
+            // 支持直接返回错误提示字符串
+            else {
+              reject(result);
+            }
+          }
+          resolve();
+        });
+
+        function errorMessage(message, params) {
+          if(params){
+            for(var i=0;i<params.length;i++){
+              message=message.replace(new RegExp("\\{"+i+"\\}","g"),params[i]);
+            }
+          }
+          message = options.invalidMessage||message;
+          setMessage(message);
+          return message;
+        }
       };
     };
     function _30(_31,_32){
@@ -351,7 +381,7 @@ define([
 
   jQuery.extend(jQuery.fn.validatebox.defaults.rules, {
     equals: {
-      validator: function(value,param){
+      validator: function(value){
         return new Promise(function(resolve, reject) {
           setTimeout(function() {
             if (value == 'zk') {
@@ -361,7 +391,7 @@ define([
               reject();
             }
 
-          }, 2000);
+          }, 0);
         });
       },
       message: 'Field do not match.'
