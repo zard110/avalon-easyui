@@ -1,7 +1,7 @@
 define([
   'angular',
   'easyui.locale',
-  'components/layout/layout',
+  './components/layout/layout',
   'components/datagrid/datagrid',
   'components/textbox/textbox',
   'components/combobox/combobox',

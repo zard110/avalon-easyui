@@ -8,6 +8,9 @@ requirejs.config({
     'themes': 'ui/themes',
     'modules': 'modules',
 
+    // centit-ui 配置
+    'centit.ui': 'ui/main',
+
     // 第三方插件配置
     'angular': 'lib/angular/1.5.9/angular',
     'jquery': 'lib/jquery/3.1.1/jquery',
