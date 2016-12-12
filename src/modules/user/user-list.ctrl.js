@@ -1,13 +1,14 @@
 define([
-  'angular'
+  'angular',
+  './test'
 ], function(ng) {
-  return ng.module('index.ctrl', [])
-    .controller('IndexController', IndexController);
+  return ng.module('centit.admin.modules.user', ['app.lazy.partials'])
+    .controller('UserListController', UserListController);
 
   ////////////////////////////////
 
   /* @ngInject */
-  function IndexController($timeout) {
+  function UserListController($timeout) {
     var vm = this;
 
     vm.title = 'Centit UI';

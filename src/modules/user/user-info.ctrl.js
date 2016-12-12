@@ -1,7 +1,7 @@
 define([
   'angular'
 ], function(ng) {
-  return ng.module('centit.admin')
+  return ng.module('centit.admin.modules.user', [])
     .controller('UserInfoController', UserInfoController);
 
   ////////////////////////////////
