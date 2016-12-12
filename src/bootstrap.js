@@ -4,27 +4,14 @@
 define([
   'require',
   'angular',
-  'config',
-  'centit.ui',
-  'modules/index/index.ctrl',
-  'modules/user/user.ctrl'
+  'centit.admin'
 ], function (
   require,
-  ng,
-  config,
-  ui,
-  index,
-  user
+  ng
 ) {
   'use strict';
 
-  ng.module(config.name, [
-    ui.name,
-    index.name,
-    user.name
-  ]);
-
   require(['domReady!'], function (document) {
-    ng.bootstrap(document, [config.name]);
+    ng.bootstrap(document, ['centit.admin']);
   });
 });

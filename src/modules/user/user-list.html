@@ -1,0 +1,33 @@
+<table xt-datagrid id="table_user_list" style="width: 100%"
+       title="用户列表"
+       items="vm.items"
+       selected="vm.user"
+       idField="id"
+       cls="user-list">
+  <thead>
+  <tr>
+    <th width="100" field="id">编号</th>
+    <th width="200" field="name">姓名</th>
+    <th width="100" field="sex">性别</th>
+    <th width="100" field="operations">操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>{{item.id}}</td>
+    <td>{{item.name}}</td>
+    <td>{{item.sex}}</td>
+    <td>
+      <a xt-linkbutton @click="vm.remove(item)">删除</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div xt-panel style="padding: 10px;"
+     title="用户信息"
+     item="vm.user"
+     cls="user-info"
+     controller="UserInfoController as vm",
+     href="modules/user/user-info.html">
+</div>

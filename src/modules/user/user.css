@@ -1,0 +1,8 @@
+.user-list, .user-info {
+  margin-bottom: 10px;
+}
+
+.user-list > .panel-body,
+.user-info > .panel-body {
+  border-width: 0 0 1px 0;
+}

@@ -5,65 +5,19 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>EasyUI Plus</title>
+  <title>Angular EasyUI</title>
 </head>
-<body class="centit-ui" ng-controller="IndexController as vm">
+<body class="centit-ui" ng-controller="CentitAdminController as vm">
 
 <div xt-layout id="parent">
-  <div id="header" data-options="region:'north'">
+  <div id="header" region="north">
     <div class="title">{{vm.title}}</div>
   </div>
-  <div id="side" data-options="region:'west'">
-
+  <div id="side" region="west"></div>
+  <div id="center" region="center">
+    <ui-view></ui-view>
   </div>
-  <div id="center" data-options="region:'center'">
-
-    <style>
-      .main {
-        margin-bottom: 10px;
-      }
-
-
-      .main > .panel-body {
-        border-width: 0 0 1px 0;
-      }
-    </style>
-    <table xt-datagrid id="users" style="width: 100%"
-           title="用户列表"
-           items="vm.items"
-           selected="vm.user"
-           idField="id"
-           cls="main">
-      <thead>
-        <tr>
-          <th width="100" field="id">编号</th>
-          <th width="200" field="name">姓名</th>
-          <th width="100" field="sex">性别</th>
-          <th width="100" field="operations">操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{item.id}}</td>
-          <td>{{item.name}}</td>
-          <td>{{item.sex}}</td>
-          <td>
-            <a xt-linkbutton @click="vm.remove(item)">删除</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div xt-panel style="padding: 10px;"
-         title="用户信息"
-         item="vm.user"
-         cls="main"
-         controller="UserController as vm",
-         href="modules/user/user.html">
-    </div>
-
-  </div>
-  <div id="footer" data-options="region:'south'"></div>
+  <div id="footer" region="south">{{vm.title}}</div>
 </div>
 
 <script data-main="app" src="lib/requirejs/require.js"></script>

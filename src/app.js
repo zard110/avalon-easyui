@@ -11,10 +11,16 @@ requirejs.config({
     // centit-ui 配置
     'centit.ui': 'ui/main',
 
+    // centit-admin 配置
+    'centit.admin': 'admin/main',
+
     // 第三方插件配置
     'angular': 'lib/angular/1.5.9/angular',
+    'angular.resource': 'lib/angular-resource/1.6.0/angular-resource',
+    'ui.router': 'lib/angular-ui-router/0.3.2/angular-ui-router.min',
     'jquery': 'lib/jquery/3.1.1/jquery',
-    'es6-promise': 'lib/es6-promise/4.0.5/es6-promise',
+    'es6.promise': 'lib/es6-promise/4.0.5/es6-promise',
+    'oc.lazyLoad': 'lib/oc-lazyload/1.0.9/ocLazyLoad',
     'domReady': 'lib/requirejs/domReady',
 
     // easyui 配置
@@ -30,7 +36,10 @@ requirejs.config({
   shim: {
     'angular': {
       exports: 'angular'
-    }
+    },
+    'angular.resource': ['angular'],
+    'ui.router': ['angular'],
+    'oc.lazyLoad': ['angular']
   },
 
   map: {
@@ -40,8 +49,4 @@ requirejs.config({
   },
 
   deps: ['./bootstrap']
-});
-
-define('config', {
-  name: 'centit'
 });

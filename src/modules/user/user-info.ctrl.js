@@ -1,13 +1,13 @@
 define([
   'angular'
 ], function(ng) {
-  return ng.module('user.ctrl', [])
-    .controller('UserController', UserController);
+  return ng.module('centit.admin')
+    .controller('UserInfoController', UserInfoController);
 
   ////////////////////////////////
 
   /* @ngInject */
-  function UserController($scope) {
+  function UserInfoController($scope) {
     var vm = this;
 
     $scope.$watch('item', function(user) {

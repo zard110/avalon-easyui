@@ -3,7 +3,7 @@
  */
 define(function(require) {
   var easyuiParser = require('easyui/parser'),
-    Promise = require('es6-promise').Promise,
+    Promise = require('es6.promise').Promise,
     $ = require('jquery');
 
   easyuiParser.auto = false;
