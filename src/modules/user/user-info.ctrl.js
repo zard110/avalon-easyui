@@ -1,8 +1,8 @@
 define([
-  'angular'
-], function(ng) {
-  return ng.module('centit.admin.modules.user', [])
-    .controller('UserInfoController', UserInfoController);
+  'angular',
+  './user.module'
+], function(ng, User) {
+  return User.controller('UserInfoController', UserInfoController);
 
   ////////////////////////////////
 
@@ -18,7 +18,6 @@ define([
       // if ($scope.UserInfo.$valid) {
       //   ng.extend($scope.item, vm.user);
       // }
-
 
       var validateboxes = $scope.UserInfo['$validateboxes'];
 

@@ -1,9 +1,10 @@
 define([
   'angular',
-  './test'
-], function(ng) {
-  return ng.module('centit.admin.modules.user', ['app.lazy.partials'])
-    .controller('UserListController', UserListController);
+
+  './user.module',
+  './user-info.ctrl'
+], function(ng, User) {
+  return User.controller('UserListController', UserListController);
 
   ////////////////////////////////
 

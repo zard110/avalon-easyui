@@ -20,7 +20,6 @@ define([
   function OcLazyLoadConfig($ocLazyLoadProvider) {
     $ocLazyLoadProvider.config({
       loadedModules: ['centit.admin'],
-      asyncLoader: require,
       debug: true
     });
   }
@@ -32,7 +31,15 @@ define([
   }
 
   /* @ngInject */
-  function RouterConfig($stateProvider, $urlRouterProvider) {
+  function RouterConfig($stateProvider, $urlRouterProvider, $locationProvider) {
+
+    $locationProvider.html5Mode(true);
+
+  //   location / {
+  //     root D:/github/avalon-easyui/src/;
+  //     index  index.html index.htm;
+  //     try_files $uri $uri/ /index.html =404;
+  //   }
 
     $urlRouterProvider
       .otherwise('/dashboard');
@@ -41,10 +48,10 @@ define([
       name: 'dashboard',
       url: '/dashboard',
 
-      lazyModule: 'centit.admin.modules.user',
-      lazyFiles: ['modules/user/user-list.ctrl.js'],
-      lazyTemplateUrl: 'lazy.html',
-      // controller: 'UserListController'
+      lazyModule: 'centit.admin.user',
+      lazyFiles: ['modules/user/user-list.ctrl'],
+      templateUrl: 'modules/user/user-list.html',
+      controller: 'UserListController as vm'
     };
 
     /**
